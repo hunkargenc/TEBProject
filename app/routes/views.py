@@ -2,8 +2,7 @@ from __future__ import annotations
 
 from fastapi import APIRouter, Depends
 
-from app.apis.api_v1.prediction import sentiment_prediction as sentiment_func
-from app.apis.api_v1.prediction import intention_prediction as intention_func
+from app.apis.api_v1.prediction import prediction as prediction
 from app.core.auth import get_current_user
 
 router = APIRouter()
@@ -18,9 +17,12 @@ async def index() -> dict[str, str]:
 
 
 @router.get("/api_v1/sentiment_intention_prediction", tags=["api_v1"])
-async def view_a(
+async def sentiment_intention_prediction(
     auth: Depends = Depends(get_current_user),
 ):
-    sentiment = sentiment_func()
-    intention = intention_func()
-    return {"sentiment": sentiment, "intention": intention}
+    # Define error. This is a list of errors that will be returned to the user.
+    errors = []
+
+    sentiments, intentions = prediction(errors)
+
+    return {"sentiments": sentiments, "intentions": intentions, "errors": errors}

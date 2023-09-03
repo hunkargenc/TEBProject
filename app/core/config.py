@@ -20,3 +20,6 @@ api_v1CCESS_TOKEN_EXPIRE_MINUTES = config(
 
 # Data configs.
 DATA_URL = config("DATA_URL", str)
+
+# Model configs.
+MODEL_URL = config("MODEL_URL", str)
