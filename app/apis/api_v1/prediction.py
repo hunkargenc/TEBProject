@@ -4,7 +4,7 @@ from .utils import get_data, get_model
 
 # TODO - add error handling
 # TODO - add async
-# TODO - add cache 
+# TODO - add cache (maybe REDIS)
 def prediction(errors):
     # Get json data
     data = get_data(errors)
