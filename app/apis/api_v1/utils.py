@@ -30,7 +30,10 @@ def get_model():
 
     # if inside models file is not None
     try:
-        is_model = os.listdir(model_url)
+        if len(os.listdir(model_url))>1:
+            is_model = True
+        else:
+            is_model = False
     except FileNotFoundError:
         is_model = False
 
