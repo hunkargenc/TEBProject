@@ -33,7 +33,7 @@ dev = [
     "ruff"
 ]
 [project.urls]
-Repository = "https://github.com/rednafi/fastapi-nano.git"
+Repository = "https://github.com/hunkargenc/TEBProject.git"
 
 #################################################
 # Mypy config

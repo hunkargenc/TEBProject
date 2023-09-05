@@ -101,6 +101,47 @@ system. From the project's root directory, run:
     docker compose up -d
     ```
 
+* if you have the following problem
+
+    ```bash 
+    Error response from daemon: Ports are not available: exposing port TCP 0.0.0.0:5000 -> 0.0.0.0:0: listen tcp 0.0.0.0:5000: bind: address already in use
+    ```
+
+    you can change docker-compose.yml file caddy part of ports
+
+    ```bash
+        ...
+        caddy:
+        image: caddy:2-alpine
+        container_name: caddy
+        restart: unless-stopped
+        env_file:
+        - .env
+        <<<<<here>>>
+        ports:
+        - ":$PORT"
+        - ":80"
+        - ":443"
+        <<<<< end here>>>
+        volumes:
+        - ./Caddyfile:/etc/caddy/Caddyfile
+        - caddy_data:/data
+        - caddy_config:/config
+
+        depends_on:
+        - tebnlp
+        ...
+    ```
+
+    and, you can go docker compose ps and show running containers you can see like this
+
+    ```bash
+    NAME                  IMAGE          COMMAND                  SERVICE             CREATED             STATUS              PORTS
+    caddy                 caddy:2-alpine      "caddy run --config …"   caddy               10 seconds ago      Up 9 seconds        443/udp, 2019/tcp, 0.0.0.0:53994->80/tcp, 0.0.0.0:53995->443/tcp, 0.0.0.0:53993->5000/tcp
+    
+    tebproject-tebnlp-1   tebproject-tebnlp   "/bin/sh -c 'gunicor…"   tebnlp              2 minutes ago       Up 2 minutes        5000/tcp, 0.0.0.0:6969->6969/tcp
+    ```
+
 ### Or, run the app locally
 
 If you want to run the app locally, without using Docker, then:
